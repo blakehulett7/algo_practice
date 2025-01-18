@@ -10,37 +10,26 @@ func fmtin() {
 	fmt.Println()
 }
 
-func scratch(s, t string) bool {
-	if len(s) != len(t) {
-		return false
+func scratch(strs []string) [][]string {
+	anagram_map := map[[26]int][]string{}
+
+	for _, str := range strs {
+		key := [26]int{}
+		str_rune := []rune(str)
+		for _, r := range str_rune {
+			key[r-'a']++
+		}
+
+		_, seen := anagram_map[key]
+		if !seen {
+			anagram_map[key] = []string{}
+		}
+		anagram_map[key] = append(anagram_map[key], str)
 	}
 
-	s_runes := []rune(s)
-	t_runes := []rune(t)
-
-	s_hash := map[rune]int{}
-	t_hash := map[rune]int{}
-
-	for i := 0; i < len(s); i++ {
-		_, exists := s_hash[s_runes[i]]
-		if !exists {
-			s_hash[s_runes[i]] = 0
-		}
-		s_hash[s_runes[i]]++
-
-		_, exists = t_hash[s_runes[i]]
-		if !exists {
-			t_hash[t_runes[i]] = 0
-		}
-		t_hash[t_runes[i]]++
+	result := [][]string{}
+	for _, value := range anagram_map {
+		result = append(result, value)
 	}
-
-	for key, s_value := range s_hash {
-		t_value := t_hash[key]
-		if s_value != t_value {
-			return false
-		}
-	}
-
-	return true
+	return result
 }
