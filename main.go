@@ -29,5 +29,29 @@ func (s Stack) peek() int {
 }
 
 func scratch(tokens []string) int {
-
+	stack := Stack{}
+	for _, token := range tokens {
+		switch token {
+		case "+":
+			num_2 := stack.pop()
+			num_1 := stack.pop()
+			stack.push(num_1 + num_2)
+		case "-":
+			num_2 := stack.pop()
+			num_1 := stack.pop()
+			stack.push(num_1 - num_2)
+		case "*":
+			num_2 := stack.pop()
+			num_1 := stack.pop()
+			stack.push(num_1 * num_2)
+		case "/":
+			num_2 := stack.pop()
+			num_1 := stack.pop()
+			stack.push(num_1 / num_2)
+		default:
+			num, _ := strconv.Atoi(token)
+			stack.push(num)
+		}
+	}
+	return stack.pop()
 }
