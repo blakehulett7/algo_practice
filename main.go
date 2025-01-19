@@ -3,33 +3,29 @@ package main
 import "fmt"
 
 func main() {
-
+	scratch("")
 }
 
 func fmtin() {
 	fmt.Println()
 }
 
-func scratch(strs []string) [][]string {
-	anagram_map := map[[26]int][]string{}
+type Stack []any
 
-	for _, str := range strs {
-		key := [26]int{}
-		str_rune := []rune(str)
-		for _, r := range str_rune {
-			key[r-'a']++
-		}
+func (s *Stack) push(element any) {
+	*s = append(*s, element)
+}
 
-		_, seen := anagram_map[key]
-		if !seen {
-			anagram_map[key] = []string{}
-		}
-		anagram_map[key] = append(anagram_map[key], str)
-	}
+func (s *Stack) pop() any {
+	top := (*s)[len(*s)-1]
+	*s = (*s)[:len(*s)-1]
+	return top
+}
 
-	result := [][]string{}
-	for _, value := range anagram_map {
-		result = append(result, value)
-	}
-	return result
+func (s Stack) peek() any {
+	return s[len(s)-1]
+}
+
+func scratch(str string) bool {
+
 }
