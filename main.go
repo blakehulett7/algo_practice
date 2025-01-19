@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -32,32 +33,27 @@ func scratch(tokens []string) int {
 	stack := Stack{}
 
 	for _, token := range tokens {
-		if len(stack) == 0 {
-			stack.push(token)
-			continue
+		switch token {
+		case "+":
+			num_1 := stack.pop().(int)
+			num_2 := stack.pop().(int)
+			stack.push(num_1 + num_2)
+		case "-":
+			num_1 := stack.pop().(int)
+			num_2 := stack.pop().(int)
+			stack.push(num_1 - num_2)
+		case "*":
+			num_1 := stack.pop().(int)
+			num_2 := stack.pop().(int)
+			stack.push(num_1 * num_2)
+		case "/":
+			num_1 := stack.pop().(int)
+			num_2 := stack.pop().(int)
+			stack.push(num_1 / num_2)
+		default:
+			num, _ := strconv.Atoi(token)
+			stack.push(num)
 		}
-
-		if !strings.Contains("+-*/", token) {
-			stack.push(token)
-			continue
-		}
-
-		num_1, num_2 := stack.pop(), stack.pop()
-		stack.push(evaluate(token, num_1, num_2))
 	}
-}
-
-func evaluate(token string, num_1, num_2 int) int {
-	switch token {
-	case "+":
-		return num_1 + num_2
-	case "-":
-		return num_1 - num_2
-	case "*":
-		return num_1 * num_2
-	case "/":
-		return num_1 / num_2
-	default:
-		return 0
-	}
+	return stack.pop().(int)
 }
