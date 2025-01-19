@@ -6,10 +6,10 @@ import (
 
 func Test_stack(t *testing.T) {
 	stack := Stack{}
-	stack.push(1)
-	stack.push(2)
+	stack.push([2]int{1, 0})
+	stack.push([2]int{2, 1})
 
-	if stack.peek() != 2 {
+	if stack.peek() != [2]int{2, 1} {
 		t.Fatal()
 	}
 
@@ -18,11 +18,11 @@ func Test_stack(t *testing.T) {
 	}
 
 	stored := stack.pop()
-	if stored != 2 {
+	if stored != [2]int{2, 1} {
 		t.Fatal()
 	}
 
-	if stack.peek() != 1 {
+	if stack.peek() != [2]int{1, 0} {
 		t.Fatal()
 	}
 

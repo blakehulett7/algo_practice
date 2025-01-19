@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 func main() {
@@ -12,46 +11,46 @@ func fmtin() {
 	fmt.Println()
 }
 
-type Stack []int
+type Stack [][2]int
 
-func (s *Stack) push(num int) {
-	*s = append(*s, num)
+func (s *Stack) push(num_idx [2]int) {
+	*s = append(*s, num_idx)
 }
 
-func (s *Stack) pop() int {
+func (s *Stack) pop() [2]int {
 	top := (*s)[len(*s)-1]
 	*s = (*s)[:len(*s)-1]
 	return top
 }
 
-func (s Stack) peek() int {
+func (s Stack) peek() [2]int {
 	return s[len(s)-1]
 }
 
-func scratch(tokens []string) int {
+func dailyTemperatures(temperatures []int) []int {
 	stack := Stack{}
-	for _, token := range tokens {
-		switch token {
-		case "+":
-			num_2 := stack.pop()
-			num_1 := stack.pop()
-			stack.push(num_1 + num_2)
-		case "-":
-			num_2 := stack.pop()
-			num_1 := stack.pop()
-			stack.push(num_1 - num_2)
-		case "*":
-			num_2 := stack.pop()
-			num_1 := stack.pop()
-			stack.push(num_1 * num_2)
-		case "/":
-			num_2 := stack.pop()
-			num_1 := stack.pop()
-			stack.push(num_1 / num_2)
-		default:
-			num, _ := strconv.Atoi(token)
-			stack.push(num)
+	result := make([]int, len(temperatures))
+
+	idx := 0
+	for idx < len(temperatures) {
+		temp := temperatures[idx]
+
+		if len(stack) == 0 {
+			stack.push([2]int{temp, idx})
+			idx++
+			continue
 		}
+
+		prev_temp := stack.peek()[0]
+		if temp <= prev_temp {
+			stack.push([2]int{temp, idx})
+			idx++
+			continue
+		}
+
+		prev_idx := stack.pop()[1]
+		result[prev_idx] = idx - prev_idx
 	}
-	return stack.pop()
+
+	return result
 }
