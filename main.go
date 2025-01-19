@@ -1,9 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
-	scratch("")
 }
 
 func fmtin() {
@@ -26,35 +28,36 @@ func (s Stack) peek() any {
 	return s[len(s)-1]
 }
 
-func scratch(str string) bool {
-	valid_map := map[rune]rune{
-		'}': '{',
-		')': '(',
-		']': '[',
-	}
-	runes := []rune(str)
+func scratch(tokens []string) int {
 	stack := Stack{}
 
-	for _, r := range runes {
+	for _, token := range tokens {
 		if len(stack) == 0 {
-			stack.push(r)
+			stack.push(token)
 			continue
 		}
 
-		left, is_right := valid_map[r]
-		if !is_right {
-			stack.push(r)
+		if !strings.Contains("+-*/", token) {
+			stack.push(token)
 			continue
 		}
 
-		if stack.pop() != left {
-			return false
-		}
+		num_1, num_2 := stack.pop(), stack.pop()
+		stack.push(evaluate(token, num_1, num_2))
 	}
+}
 
-	if len(stack) != 0 {
-		return false
+func evaluate(token string, num_1, num_2 int) int {
+	switch token {
+	case "+":
+		return num_1 + num_2
+	case "-":
+		return num_1 - num_2
+	case "*":
+		return num_1 * num_2
+	case "/":
+		return num_1 / num_2
+	default:
+		return 0
 	}
-
-	return true
 }
