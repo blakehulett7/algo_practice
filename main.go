@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"slices"
 )
 
 func main() {
@@ -36,6 +37,10 @@ func carFleet(target int, position, speed []int) int {
 		cars = append(cars, [2]int{position[i], speed[i]})
 	}
 
+	slices.SortFunc(cars, func(a, b [2]int) int {
+		return b[0] - a[0]
+	})
+
 	for _, car := range cars {
 		time := float64(target-car[0]) / float64(car[1])
 
@@ -45,7 +50,7 @@ func carFleet(target int, position, speed []int) int {
 		}
 
 		prev_time := stack.peek()
-		if time < prev_time {
+		if time > prev_time {
 			stack.push(time)
 		}
 	}
