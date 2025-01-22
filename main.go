@@ -12,18 +12,26 @@ func fmtin() {
 	fmt.Println()
 }
 
-func isAnagram(s, t string) bool {
-	if len(s) != len(t) {
-		return false
+type Stack []int
+
+func (s *Stack) push(num int) {
+	*s = append(*s, num)
+}
+
+func (s *Stack) pop() int {
+	top := (*s)[len(*s)-1]
+	*s = (*s)[:len(*s)-1]
+	return top
+}
+
+func (s Stack) peek() int {
+	return s[len(s)-1]
+}
+
+func largestRectangleArea(heights []int) int {
+	stack := Stack{}
+
+	for idx, height := range heights {
+
 	}
-
-	s_count := make([]int, 26)
-	t_count := make([]int, 26)
-
-	for i := 0; i < len(s); i++ {
-		s_count[s[i]-'a']++
-		t_count[t[i]-'a']++
-	}
-
-	return slices.Equal(s_count, t_count)
 }
