@@ -23,4 +23,15 @@ func topKFrequent(nums []int, k int) []int {
 		buckets[count] = append(buckets[count], num)
 	}
 
+	i := 0
+	result := []int{}
+	for j := len(buckets) - 1; i < k; j-- {
+		bucket := buckets[j]
+		for _, num := range bucket {
+			result = append(result, num)
+			i++
+		}
+	}
+
+	return result
 }
