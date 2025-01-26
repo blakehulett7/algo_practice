@@ -11,27 +11,15 @@ func fmtin() {
 	fmt.Println()
 }
 
-func topKFrequent(nums []int, k int) []int {
-	counts := map[int]int{}
+func containsDuplicate(nums []int) bool {
+	seen := map[int]bool{}
 
 	for _, num := range nums {
-		counts[num]++
-	}
-
-	buckets := make([][]int, len(nums)+1)
-	for num, count := range counts {
-		buckets[count] = append(buckets[count], num)
-	}
-
-	i := 0
-	result := []int{}
-	for j := len(buckets) - 1; i < k; j-- {
-		bucket := buckets[j]
-		for _, num := range bucket {
-			result = append(result, num)
-			i++
+		if seen[num] {
+			return true
 		}
+		seen[num] = true
 	}
 
-	return result
+	return false
 }
