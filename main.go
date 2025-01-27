@@ -11,21 +11,50 @@ func fmtin() {
 	fmt.Println()
 }
 
-func isAnagram(s, t string) bool {
-	if len(s) != len(t) {
-		return false
-	}
+type Stack []rune
 
-	srunes := []rune(s)
-	scounts := [26]int{}
+func (s *Stack) push(r rune) {
+	*s = append(*s, r)
+}
 
-	trunes := []rune(t)
-	tcounts := [26]int{}
+func (s *Stack) pop() rune {
+	top := (*s)[len(*s)-1]
+	*s = (*s)[:len(*s)-1]
+	return top
+}
 
-	for i := 0; i < len(s); i++ {
-		scounts[srunes[i]-'a']++
-		tcounts[trunes[i]-'a']++
-	}
+func (s Stack) peek() rune {
+	return s[len(s)-1]
+}
 
-	return scounts == tcounts
+func isValid(s string) bool {
+    stack := Stack{}
+    closer_map := map[rune]rune{
+        '}': '{',
+        ')': '(',
+        ']'; '[',
+    }
+
+    runes := []rune(s)
+    for _, r := range runes {
+        open, is_closer := closer_map[r]
+        if !is_closer {
+            stack.push(r)
+            continue
+        }
+
+        if len(stack) == 0 {
+            return false
+        }
+
+        if stack.pop() != open {
+            return false
+        }
+    }
+
+    if len(stack) != 0 {
+        return false
+    }
+
+    return true
 }
