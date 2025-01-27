@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"unicode"
 )
 
 func main() {
@@ -11,50 +12,32 @@ func fmtin() {
 	fmt.Println()
 }
 
-type Stack []rune
+func isPalindrome(s string) bool {
+	left := 0
+	right := len(s) - 1
+	runes := []rune(s)
 
-func (s *Stack) push(r rune) {
-	*s = append(*s, r)
-}
+	for left < right {
+		left_char := unicode.ToLower(runes[left])
+		right_char := unicode.ToLower(runes[right])
 
-func (s *Stack) pop() rune {
-	top := (*s)[len(*s)-1]
-	*s = (*s)[:len(*s)-1]
-	return top
-}
+		if !unicode.IsDigit(left_char) && !unicode.IsLetter(left_char) {
+			left++
+			continue
+		}
 
-func (s Stack) peek() rune {
-	return s[len(s)-1]
-}
+		if !unicode.IsDigit(right_char) && !unicode.IsLetter(right_char) {
+			right--
+			continue
+		}
 
-func isValid(s string) bool {
-    stack := Stack{}
-    closer_map := map[rune]rune{
-        '}': '{',
-        ')': '(',
-        ']'; '[',
-    }
+		if left_char != right_char {
+			return false
+		}
 
-    runes := []rune(s)
-    for _, r := range runes {
-        open, is_closer := closer_map[r]
-        if !is_closer {
-            stack.push(r)
-            continue
-        }
+		left++
+		right--
+	}
 
-        if len(stack) == 0 {
-            return false
-        }
-
-        if stack.pop() != open {
-            return false
-        }
-    }
-
-    if len(stack) != 0 {
-        return false
-    }
-
-    return true
+	return true
 }
