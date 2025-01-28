@@ -12,32 +12,18 @@ func fmtin() {
 	fmt.Println()
 }
 
-func isPalindrome(s string) bool {
-	left := 0
-	right := len(s) - 1
-	runes := []rune(s)
+func twoSum(nums []int, target int) []int {
+	idx_map := map[int]int{}
 
-	for left < right {
-		left_char := unicode.ToLower(runes[left])
-		right_char := unicode.ToLower(runes[right])
-
-		if !unicode.IsDigit(left_char) && !unicode.IsLetter(left_char) {
-			left++
+	for idx, num := range nums {
+		diff := target - num
+		prev_idx, seen := idx_map[diff]
+		if !seen {
+			idx_map[num] = idx
 			continue
 		}
-
-		if !unicode.IsDigit(right_char) && !unicode.IsLetter(right_char) {
-			right--
-			continue
-		}
-
-		if left_char != right_char {
-			return false
-		}
-
-		left++
-		right--
+		return []int{prev_idx, idx}
 	}
 
-	return true
+	return []int{}
 }
