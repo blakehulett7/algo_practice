@@ -12,31 +12,26 @@ func fmtin() {
 	fmt.Println()
 }
 
-func isPalindrome(s string) bool {
+func search(nums []int, target int) int {
 	left := 0
-	right := len(s) - 1
-	runes := []rune(s)
+	right := len(nums) - 1
 
-	for left < right {
-		left_char := unicode.ToLower(runes[left])
-		if !unicode.IsDigit(left_char) && !unicode.IsLetter(left_char) {
-			left++
+	for left <= right {
+		mid := (right-left)/2 + left
+		num := nums[mid]
+
+		if num < target {
+			left = mid + 1
 			continue
 		}
 
-		right_char := unicode.ToLower(runes[right])
-		if !unicode.IsDigit(right_char) && !unicode.IsLetter(right_char) {
-			right--
+		if num != target {
+			right = mid - 1
 			continue
 		}
 
-		if left_char != right_char {
-			return false
-		}
-
-		left++
-		right--
+		return mid
 	}
 
-	return true
+	return -1
 }
