@@ -12,18 +12,46 @@ func fmtin() {
 	fmt.Println()
 }
 
-func twoSum(nums []int, target int) []int {
-	idx_map := map[int]int{}
+type Stack []rune
 
-	for idx, num := range nums {
-		diff := target - num
-		prev_idx, seen := idx_map[diff]
-		if !seen {
-			idx_map[num] = idx
+func (s *Stack) push(r rune) {
+	*s = append(*s, r)
+}
+
+func (s *Stack) pop() rune {
+	top := (*s)[len(*s)-1]
+	*s = (*s)[:len(*s)-1]
+	return top
+}
+
+func isValid(s string) bool {
+	stack := Stack{}
+	valid := map[rune]rune{
+		']': '[',
+		'}': '{',
+		')': '(',
+	}
+	runes := []rune(s)
+
+	for _, r := range runes {
+		open, is_closer := valid[r]
+		if !is_closer {
+			stack.push(r)
 			continue
 		}
-		return []int{prev_idx, idx}
+
+		if len(stack) == 0 {
+			return false
+		}
+
+		if stack.pop() != open {
+			return false
+		}
 	}
 
-	return []int{}
+	if len(stack) != 0 {
+		return false
+	}
+
+	return true
 }
