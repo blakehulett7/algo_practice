@@ -12,16 +12,21 @@ func fmtin() {
 	fmt.Println()
 }
 
-func containsDuplicate(nums []int) bool {
-	seen := map[int]bool{}
-
-	for _, num := range nums {
-		if seen[num] {
-			return true
-		}
-
-		seen[num] = true
+func isAnagram(s, t string) bool {
+	if len(s) != len(t) {
+		return false
 	}
 
-	return false
+	s_runes := []rune(s)
+	s_counts := [26]int{}
+
+	t_runes := []rune(t)
+	t_counts := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		s_counts[s_runes[i]-'a']++
+		t_counts[t_runes[i]-'a']++
+	}
+
+	return s_counts == t_counts
 }
