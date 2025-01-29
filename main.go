@@ -12,26 +12,21 @@ func fmtin() {
 	fmt.Println()
 }
 
-func search(nums []int, target int) int {
-	left := 0
-	right := len(nums) - 1
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
-	for left <= right {
-		mid := (right-left)/2 + left
-		num := nums[mid]
+func reverseList(head *ListNode) *ListNode {
+	var previous *ListNode
+	current := head
 
-		if num < target {
-			left = mid + 1
-			continue
-		}
-
-		if num != target {
-			right = mid - 1
-			continue
-		}
-
-		return mid
+	for current != nil {
+		next := current.Next
+		current.Next = previous
+		previous = current
+		current = next
 	}
 
-	return -1
+	return previous
 }
