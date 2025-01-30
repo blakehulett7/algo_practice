@@ -12,23 +12,22 @@ func fmtin() {
 	fmt.Println()
 }
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
-func hasCycle(head *ListNode) bool {
-	seen := map[*ListNode]bool{}
-	current := head
-
-	for current != nil {
-		if seen[current] {
-			return true
-		}
-
-		seen[current] = true
-		current = current.Next
+func invertTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
 	}
 
-	return false
+	root.Left, root.Right = root.Right, root.Left
+
+	invertTree(root.Left)
+	invertTree(root.Right)
+
+	return root
+
 }
