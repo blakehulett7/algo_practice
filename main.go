@@ -18,10 +18,15 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func maxDepth(root *TreeNode) int {
+func invertTree(root *TreeNode) *TreeNode {
 	if root == nil {
-		return 0
+		return nil
 	}
 
-	return 1 + max(maxDepth(root.Left), maxDepth(root.Right))
+	root.Left, root.Right = root.Right, root.Left
+
+	invertTree(root.Left)
+	invertTree(root.Right)
+
+	return root
 }
