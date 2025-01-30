@@ -12,21 +12,26 @@ func fmtin() {
 	fmt.Println()
 }
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+func maxProfit(prices []int) int {
+	buy_idx := 0
+	sell_idx := 1
+	max_profit := 0
 
-func reverseList(head *ListNode) *ListNode {
-	var previous *ListNode
-	current := head
+	for sell_idx < len(prices) {
+		buy := prices[buy_idx]
+		sell := prices[sell_idx]
+		if sell < buy {
+			buy_idx = sell_idx
+			sell_idx++
+			continue
+		}
 
-	for current != nil {
-		next := current.Next
-		current.Next = previous
-		previous = current
-		current = next
+		profit := sell - buy
+		if max_profit < profit {
+			max_profit = profit
+		}
+		sell_idx++
 	}
 
-	return previous
+	return max_profit
 }
