@@ -12,26 +12,33 @@ func fmtin() {
 	fmt.Println()
 }
 
-func maxProfit(prices []int) int {
-	buy_idx := 0
-	sell_idx := 1
-	max_profit := 0
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
-	for sell_idx < len(prices) {
-		buy := prices[buy_idx]
-		sell := prices[sell_idx]
-		if sell < buy {
-			buy_idx = sell_idx
-			sell_idx++
+func mergeTwoLists(list1, list2 *ListNode) *ListNode {
+	dummy := &ListNode{}
+	node := dummy
+
+	for list1 != nil && list2 != nil {
+		if list1.Val < list2.Val {
+			node.Next = list1
+			list1 = list1.Next
+			node = node.Next
 			continue
 		}
 
-		profit := sell - buy
-		if max_profit < profit {
-			max_profit = profit
-		}
-		sell_idx++
+		node.Next = list2
+		list2 = list2.Next
+		node = node.Next
 	}
 
-	return max_profit
+	if list2 == nil {
+		node.Next = list1
+		return dummy.Next
+	}
+
+	node.Next = list2
+	return dummy.Next
 }
