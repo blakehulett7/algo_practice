@@ -12,32 +12,21 @@ func fmtin() {
 	fmt.Println()
 }
 
-func isPalindrome(s string) bool {
-	left := 0
-	right := len(s) - 1
-	runes := []rune(s)
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
-	for left < right {
-		left_char := unicode.ToLower(runes[left])
-		if !unicode.IsDigit(left_char) && !unicode.IsLetter(left_char) {
-			left++
-			continue
-		}
+func reverseList(head *ListNode) *ListNode {
+	var previous *ListNode
+	current := head
 
-		right_char := unicode.ToLower(runes[right])
-		if !unicode.IsDigit(right_char) && !unicode.IsLetter(right_char) {
-			right--
-			continue
-		}
-
-		if left_char != right_char {
-			return false
-		}
-
-		left++
-		right--
-
+	for current != nil {
+		next := current.Next
+		current.Next = previous
+		previous = current
+		current = next
 	}
 
-	return true
+	return previous
 }
