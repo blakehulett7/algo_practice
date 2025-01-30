@@ -12,26 +12,23 @@ func fmtin() {
 	fmt.Println()
 }
 
-func search(nums []int, target int) int {
-	left := 0
-	right := len(nums) - 1
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
-	for left <= right {
-		mid := (right-left)/2 + left
-		num := nums[mid]
+func hasCycle(head *ListNode) bool {
+	seen := map[*ListNode]bool{}
+	current := head
 
-		if num < target {
-			left = mid + 1
-			continue
+	for current != nil {
+		if seen[current] {
+			return true
 		}
 
-		if num != target {
-			right = mid - 1
-			continue
-		}
-
-		return mid
+		seen[current] = true
+		current = current.Next
 	}
 
-	return -1
+	return false
 }
