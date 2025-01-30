@@ -18,10 +18,22 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func maxDepth(root *TreeNode) int {
-	if root == nil {
-		return 0
+func diameterOfBinaryTree(root *TreeNode) int {
+	max_length := 0
+
+	var dfs func(*TreeNode) int
+	dfs = func(current *TreeNode) int {
+		if current == nil {
+			return 0
+		}
+
+		left := dfs(current.Left)
+		right := dfs(current.Right)
+
+		max_length = max(max_length, left+right)
+		return 1 + max(left, right)
 	}
 
-	return 1 + max(maxDepth(root.Left), maxDepth(root.Right))
+	dfs(root)
+	return max_length
 }
