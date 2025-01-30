@@ -12,22 +12,15 @@ func fmtin() {
 	fmt.Println()
 }
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+func containsDuplicate(nums []int) bool {
+	seen := map[int]bool{}
 
-func hasCycle(head *ListNode) bool {
-	seen := map[*ListNode]bool{}
-
-	current := head
-	for current != nil {
-		if seen[current] {
+	for _, num := range nums {
+		if seen[num] {
 			return true
 		}
 
-		seen[current] = true
-		current = current.Next
+		seen[num] = true
 	}
 
 	return false
