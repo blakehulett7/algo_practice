@@ -12,26 +12,16 @@ func fmtin() {
 	fmt.Println()
 }
 
-func search(nums []int, target int) int {
-	left := 0
-	right := len(nums) - 1
+func containsDuplicate(nums []int) bool {
+	seen := map[int]bool{}
 
-	for left <= right {
-		mid := (right-left)/2 + left
-		num := nums[mid]
-
-		if num < target {
-			left = mid + 1
-			continue
+	for _, num := range nums {
+		if seen[num] {
+			return true
 		}
 
-		if num != target {
-			right = mid - 1
-			continue
-		}
-
-		return mid
+		seen[num] = true
 	}
 
-	return -1
+	return false
 }
