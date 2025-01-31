@@ -12,16 +12,26 @@ func fmtin() {
 	fmt.Println()
 }
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
+func search(nums []int, target int) int {
+	left := 0
+	right := len(nums) - 1
 
-func maxDepth(root *TreeNode) int {
-	if root == nil {
-		return 0
+	for left <= right {
+		mid := (right-left)/2 + left
+		num := nums[mid]
+
+		if num < target {
+			left = mid + 1
+			continue
+		}
+
+		if num != target {
+			right = mid - 1
+			continue
+		}
+
+		return mid
 	}
 
-	return 1 + max(maxDepth(root.Left), maxDepth(root.Right))
+	return -1
 }
