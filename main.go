@@ -18,22 +18,15 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func diameterOfBinaryTree(root *TreeNode) int {
-	max_length := 0
-
-	var dfs func(*TreeNode) int
-	dfs = func(current *TreeNode) int {
-		if current == nil {
-			return 0
-		}
-
-		left := dfs(current.Left)
-		right := dfs(current.Right)
-
-		max_length = max(max_length, left+right)
-		return 1 + max(left, right)
+func invertTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
 	}
 
-	dfs(root)
-	return max_length
+	root.Left, root.Right = root.Right, root.Left
+
+	invertTree(root.Left)
+	invertTree(root.Right)
+
+	return root
 }
