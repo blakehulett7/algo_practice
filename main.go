@@ -12,27 +12,23 @@ func fmtin() {
 	fmt.Println()
 }
 
-func maxProfit(prices []int) int {
-	buy_idx := 0
-	sell_idx := 1
-	max_profit := 0
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
-	for sell_idx < len(prices) {
-		buy := prices[buy_idx]
-		sell := prices[sell_idx]
+func hasCycle(head *ListNode) bool {
+	seen := map[*ListNode]bool{}
+	current := head
 
-		if sell < buy {
-			buy_idx = sell_idx
-			sell_idx++
-			continue
+	for current != nil {
+		if seen[current] {
+			return true
 		}
 
-		profit := sell - buy
-		if max_profit < profit {
-			max_profit = profit
-		}
-		sell_idx++
+		seen[current] = true
+		current = current.Next
 	}
 
-	return max_profit
+	return false
 }
