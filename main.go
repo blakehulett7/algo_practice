@@ -17,18 +17,28 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func hasCycle(head *ListNode) bool {
-	seen := map[*ListNode]bool{}
-	current := head
+func mergeTwoLists(list1, list2 *ListNode) *ListNode {
+	dummy := &ListNode{}
+	node := dummy
 
-	for current != nil {
-		if seen[current] {
-			return true
+	for list1 != nil && list2 != nil {
+		if list1.Val < list2.Val {
+			node.Next = list1
+			list1 = list1.Next
+			node = node.Next
+			continue
 		}
 
-		seen[current] = true
-		current = current.Next
+		node.Next = list2
+		list2 = list2.Next
+		node = node.Next
 	}
 
-	return false
+	if list2 == nil {
+		node.Next = list1
+		return dummy.Next
+	}
+
+	node.Next = list2
+	return dummy.Next
 }
