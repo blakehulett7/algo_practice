@@ -17,18 +17,16 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func hasCycle(head *ListNode) bool {
-	seen := map[*ListNode]bool{}
+func reverseList(head *ListNode) *ListNode {
+	var previous *ListNode
 	current := head
 
 	for current != nil {
-		if seen[current] {
-			return true
-		}
-
-		seen[current] = true
-		current = current.Next
+		next := current.Next
+		current.Next = previous
+		previous = current
+		current = next
 	}
 
-	return false
+	return previous
 }
