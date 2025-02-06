@@ -30,32 +30,14 @@ func (s Stack) peek() rune {
 
 func isValid(s string) bool {
 	stack := Stack{}
-	rune_map := map[rune]rune{
-		'}': '{',
-		']': '[',
-		')': '(',
-	}
+    rune_map := map[rune]rune{
+        '}': '{',
+        ']': '[',
+        ')':
+    }
 	runes := []rune(s)
 
-	for _, r := range runes {
-		opener, is_closer := rune_map[r]
-		if !is_closer {
-			stack.push(r)
-			continue
-		}
-
-		if len(stack) == 0 {
-			return false
-		}
-
-		if opener != stack.pop() {
-			return false
-		}
-	}
-
-	if len(stack) != 0 {
-		return false
-	}
-
-	return true
+    for _, r := range runes {
+        if 
+    }
 }
