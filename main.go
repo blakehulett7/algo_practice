@@ -17,16 +17,28 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func reverseList(head *ListNode) *ListNode {
-	var previous *ListNode
-	current := head
+func mergeTwoLists(list1, list2 *ListNode) *ListNode {
+	dummy := &ListNode{}
+	current := dummy
 
-	for current != nil {
-		next := current.Next
-		current.Next = previous
-		previous = current
-		current = next
+	for list1 != nil && list2 != nil {
+		if list1.Val < list2.Val {
+			current.Next = list1
+			current = current.Next
+			list1 = list1.Next
+			continue
+		}
+
+		current.Next = list2
+		current = current.Next
+		list2 = list2.Next
 	}
 
-	return previous
+	if list2 == nil {
+		current.Next = list1
+		return dummy.Next
+	}
+
+	current.Next = list2
+	return dummy.Next
 }
