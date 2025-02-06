@@ -12,21 +12,16 @@ func fmtin() {
 	fmt.Println()
 }
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+func containsDuplicate(nums []int) bool {
+	seen := map[int]bool{}
 
-func reverseList(head *ListNode) *ListNode {
-	var previous *ListNode
-	current := head
+	for _, num := range nums {
+		if seen[num] {
+			return true
+		}
 
-	for current != nil {
-		next := current.Next
-		current.Next = previous
-		previous = current
-		current = next
+		seen[num] = true
 	}
 
-	return previous
+	return false
 }
