@@ -12,33 +12,21 @@ func fmtin() {
 	fmt.Println()
 }
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
-func mergeTwoLists(list1, list2 *ListNode) *ListNode {
-	dummy := &ListNode{}
-	current := dummy
-
-	for list1 != nil && list2 != nil {
-		if list1.Val < list2.Val {
-			current.Next = list1
-			current = current.Next
-			list1 = list1.Next
-			continue
-		}
-
-		current.Next = list2
-		current = current.Next
-		list2 = list2.Next
+func invertTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return root
 	}
 
-	if list2 == nil {
-		current.Next = list1
-		return dummy.Next
-	}
+	root.Left, root.Right = root.Right, root.Left
 
-	current.Next = list2
-	return dummy.Next
+	invertTree(root.Left)
+	invertTree(root.Right)
+
+	return root
 }
