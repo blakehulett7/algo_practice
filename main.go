@@ -12,28 +12,26 @@ func fmtin() {
 	fmt.Println()
 }
 
-func maxProfit(prices []int) int {
-	buy_idx := 0
-	sell_idx := 1
-	max_profit := 0
+func search(nums []int, target int) int {
+	left := 0
+	right := len(nums) - 1
 
-	for sell_idx < len(prices) {
-		buy := prices[buy_idx]
-		sell := prices[sell_idx]
+	for left <= right {
+		mid := left + (right-left)/2
+		num := nums[mid]
 
-		if sell < buy {
-			buy_idx = sell_idx
-			sell_idx++
+		if num < target {
+			left = mid + 1
 			continue
 		}
 
-		profit := sell - buy
-		if max_profit < profit {
-			max_profit = profit
+		if num != target {
+			right = mid - 1
+			continue
 		}
 
-		sell_idx++
+		return mid
 	}
 
-	return max_profit
+	return -1
 }
