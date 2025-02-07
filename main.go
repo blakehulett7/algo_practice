@@ -13,21 +13,20 @@ func fmtin() {
 	fmt.Println()
 }
 
-func isAnagram(s, t string) bool {
-	if len(s) != len(t) {
-		return false
+func twoSum(nums []int, target int) []int {
+	idx_map := map[int]int{}
+
+	for idx, num := range nums {
+		diff := target - num
+		prev_idx, seen := idx_map[diff]
+
+		if !seen {
+			idx_map[num] = idx
+			continue
+		}
+
+		return []int{prev_idx, idx}
 	}
 
-	s_runes := []rune(s)
-	s_counts := [26]int{}
-
-	t_runes := []rune(t)
-	t_counts := [26]int{}
-
-	for i := 0; i < len(s); i++ {
-		s_counts[s_runes[i]-'a']++
-		t_counts[t_runes[i]-'a']++
-	}
-
-	return s_counts == t_counts
+	return []int{}
 }
