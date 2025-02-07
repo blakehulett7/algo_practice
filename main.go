@@ -39,3 +39,19 @@ func isSameTree(p, q *TreeNode) bool {
 
 	return true
 }
+
+func isSubtree(root, subroot *TreeNode) bool {
+	if subroot == nil {
+		return true
+	}
+
+	if root == nil {
+		return false
+	}
+
+	if isSameTree(root, subroot) {
+		return true
+	}
+
+	return isSubtree(root.Left, subroot) || isSubtree(root.Right, subroot)
+}
