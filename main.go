@@ -19,39 +19,28 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func isSameTree(p, q *TreeNode) bool {
-	if p == nil && q == nil {
-		return true
-	}
-	if p == nil || q == nil {
-		return false
-	}
-	if p.Val != q.Val {
-		return false
+func levelOrder(root *TreeNode) [][]int {
+	to_visit := []*TreeNode{root}
+	result := [][]int{}
+
+	for len(to_visit) != 0 {
+		list_size := len(to_visit)
+		list := []int{}
+		for i := 0; i < list_size; i++ {
+			current := to_visit[0]
+			to_visit = to_visit[1:]
+			if current == nil {
+				continue
+			}
+			to_visit = append(to_visit, current.Left, current.Right)
+			list = append(list, current.Val)
+		}
+
+		if len(list) == 0 {
+			break
+		}
+		result = append(result, list)
 	}
 
-	if !isSameTree(p.Left, q.Left) {
-		return false
-	}
-	if !isSameTree(p.Right, q.Right) {
-		return false
-	}
-
-	return true
-}
-
-func isSubtree(root, subroot *TreeNode) bool {
-	if subroot == nil {
-		return true
-	}
-
-	if root == nil {
-		return false
-	}
-
-	if isSameTree(root, subroot) {
-		return true
-	}
-
-	return isSubtree(root.Left, subroot) || isSubtree(root.Right, subroot)
+	return result
 }
