@@ -13,50 +13,26 @@ func fmtin() {
 	fmt.Println()
 }
 
-type Stack []rune
+func search(nums []int, target int) int {
+	left := 0
+	right := len(nums) - 1
 
-func (s *Stack) push(r rune) {
-	*s = append(*s, r)
-}
+	for left <= right {
+		mid := left + (right-left)/2
+		num := nums[mid]
 
-func (s *Stack) pop() rune {
-	top := (*s)[len(*s)-1]
-	*s = (*s)[:len(*s)-1]
-	return top
-}
-
-func (s Stack) peek() rune {
-	return s[len(s)-1]
-}
-
-func isValid(s string) bool {
-	stack := Stack{}
-	valid_map := map[rune]rune{
-		')': '(',
-		'}': '{',
-		']': '[',
-	}
-	runes := []rune(s)
-
-	for _, r := range runes {
-		opener, is_closer := valid_map[r]
-		if !is_closer {
-			stack.push(r)
+		if num < target {
+			left = mid + 1
 			continue
 		}
 
-		if len(stack) == 0 {
-			return false
+		if num != target {
+			right = mid - 1
+			continue
 		}
 
-		if opener != stack.pop() {
-			return false
-		}
+		return mid
 	}
 
-	if len(stack) != 0 {
-		return false
-	}
-
-	return true
+	return -1
 }
