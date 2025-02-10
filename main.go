@@ -13,21 +13,21 @@ func fmtin() {
 	fmt.Println()
 }
 
-type ListNode Struct {
-    Val int
-    Next *ListNode
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
-func reverseList(head *ListNode) *ListNode {
-    var previous *ListNode
-    current := head
+func invertTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return root
+	}
 
-    for current != nil {
-        next := current.Next
-        current.Next = previous
-        previous = current
-        current = next
-    }
+	root.Left, root.Right = root.Right, root.Left
 
-    return previous
+	invertTree(root.Left)
+	invertTree(root.Right)
+
+	return root
 }
