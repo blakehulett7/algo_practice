@@ -13,21 +13,16 @@ func fmtin() {
 	fmt.Println()
 }
 
-func is_anagram(s, t string) bool {
-	if len(s) != len(t) {
-		return false
+func containsDuplicate(nums []int) bool {
+	seen := map[int]bool{}
+
+	for _, num := range nums {
+		if seen[num] {
+			return true
+		}
+
+		seen[num] = true
 	}
 
-	scount := [26]int{}
-	tcount := [26]int{}
-
-	for i := 1; i < len(s); i++ {
-		schar := s[i]
-		tchar := t[i]
-
-		scount[schar-'a']++
-		tcount[tchar-'a']++
-	}
-
-	return scount == tcount
+	return false
 }
