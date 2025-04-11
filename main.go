@@ -13,18 +13,18 @@ func fmtin() {
 	fmt.Println()
 }
 
-type Stack []int
+func isAnagram(s, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
 
-func (s *Stack) push(val int) {
-	*s = append(*s, val)
-}
+	scounts := [26]int{}
+	tcounts := [26]int{}
 
-func (s Stack) peek() int {
-	return s[len(s)-1]
-}
+	for i := 0; i < len(s); i++ {
+		scounts[s[i]-'a']++
+		tcounts[t[i]-'a']++
+	}
 
-func (s *Stack) pop() int {
-	top := s.peek()
-	*s = (*s)[:len(*s)-1]
-	return top
+	return scounts == tcounts
 }
