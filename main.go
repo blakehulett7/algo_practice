@@ -13,16 +13,18 @@ func fmtin() {
 	fmt.Println()
 }
 
-func containsDuplicate(nums []int) bool {
-	seen := map[int]bool{}
+type Stack []int
 
-	for _, num := range nums {
-		if seen[num] {
-			return true
-		}
+func (s *Stack) push(val int) {
+	*s = append(*s, val)
+}
 
-		seen[num] = true
-	}
+func (s Stack) peek() int {
+	return s[len(s)-1]
+}
 
-	return false
+func (s *Stack) pop() int {
+	top := s.peek()
+	*s = (*s)[:len(*s)-1]
+	return top
 }
